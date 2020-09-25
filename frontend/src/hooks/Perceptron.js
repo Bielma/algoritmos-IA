@@ -5,12 +5,12 @@ class  Perceptron {
     constructor(size, lr, it){
 		this.w  = [];
 		this.learningRate=  lr || 0.01;
-        this.iterations =  it || 10;
+        this.iterations =  it || 1000;
         this.error = 0;
         this.errorAcumulado = [];
 
         for(var i = 0; i<size+1  ; i++){
-            this.w[i] = Math.random() * (5 - (-5)) + (-5);
+            this.w[i] = Math.random() * (1 - (-1)) + (-1);
         }
         console.log(this.w);
 	}
@@ -18,15 +18,18 @@ class  Perceptron {
    
 
     fit = (inputs, outputs) =>{
+
+     
    
         const x = inputs || [
-            [5, 3, 2],
-            [4, 1, 3],
-            [3, 2, 3],
-            [3, 3, 3]
+            [0, 0, 1],
+            [0, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1]
         ];
-        const y = outputs || [0,0,1,1];
-
+        
+        const y = outputs || [0,0,0,1]; //And
+        //const y = outputs || [0,1,1,1]; //Or
     
         var done = false;    
         //var error = 0;

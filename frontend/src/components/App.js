@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../App.css';
 import Perceptron from '../hooks/Perceptron.js';
 //import usePerceptron from '../hoocks/usePerceptron';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
+//import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 function App() { 
 
   const [salida, setSalida ]= useState("");
@@ -16,11 +16,11 @@ function App() {
     setEntrenado(false);
     perceptron.fit();
     setEntrenado(true);
-    console.log(perceptron.errorAcumulado);
+    console.log(perceptron.w);
   }
   const probar = () =>{
 
-    const x = [4, 1, 3];
+    const x = [1, 0, 1];
     const xd = perceptron.predict(x);
     console.log("Salida perceptron :", xd);
     setSalida(xd);
@@ -40,14 +40,7 @@ function App() {
         <input type="submit" value="Probar" onClick  = {probar}/>
         <a >{salida}</a>
 
-        { entrenado &&
-          <LineChart width={600} height={300} data={perceptron.errorAcumulado}>          
-            <Line type="monotone" dataKey="error" stroke="#8884d8" />
-              <CartesianGrid stroke="#ccc" />
-              <XAxis dataKey="epoca" />
-              <YAxis />
-          </LineChart>
-        }
+     
       </header>
     </div>
   );
