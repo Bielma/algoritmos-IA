@@ -17,10 +17,7 @@ class  Perceptron {
 
    
 
-    fit = (inputs, outputs) =>{
-
-     
-   
+    fit = (inputs, outputs) =>{        
         const x = inputs || [
             [0, 0, 1],
             [0, 1, 1],
