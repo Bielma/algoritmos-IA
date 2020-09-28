@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/algoritmos-IA/static/css/main.bca7b399.chunk.css",
+    "main.js": "/algoritmos-IA/static/js/main.f846e1cd.chunk.js",
+    "main.js.map": "/algoritmos-IA/static/js/main.f846e1cd.chunk.js.map",
+    "runtime-main.js": "/algoritmos-IA/static/js/runtime-main.8eef04b2.js",
+    "runtime-main.js.map": "/algoritmos-IA/static/js/runtime-main.8eef04b2.js.map",
+    "static/css/2.d9ad5f5c.chunk.css": "/algoritmos-IA/static/css/2.d9ad5f5c.chunk.css",
+    "static/js/2.72b881f4.chunk.js": "/algoritmos-IA/static/js/2.72b881f4.chunk.js",
+    "static/js/2.72b881f4.chunk.js.map": "/algoritmos-IA/static/js/2.72b881f4.chunk.js.map",
+    "index.html": "/algoritmos-IA/index.html",
+    "precache-manifest.705a63122463f5c5d79507022aa2f714.js": "/algoritmos-IA/precache-manifest.705a63122463f5c5d79507022aa2f714.js",
+    "service-worker.js": "/algoritmos-IA/service-worker.js",
+    "static/css/2.d9ad5f5c.chunk.css.map": "/algoritmos-IA/static/css/2.d9ad5f5c.chunk.css.map",
+    "static/css/main.bca7b399.chunk.css.map": "/algoritmos-IA/static/css/main.bca7b399.chunk.css.map",
+    "static/js/2.72b881f4.chunk.js.LICENSE.txt": "/algoritmos-IA/static/js/2.72b881f4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8eef04b2.js",
+    "static/css/2.d9ad5f5c.chunk.css",
+    "static/js/2.72b881f4.chunk.js",
+    "static/css/main.bca7b399.chunk.css",
+    "static/js/main.f846e1cd.chunk.js"
+  ]
+}
