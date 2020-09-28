@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/algoritmos-IA/static/css/main.bca7b399.chunk.css",
-    "main.js": "/algoritmos-IA/static/js/main.f846e1cd.chunk.js",
-    "main.js.map": "/algoritmos-IA/static/js/main.f846e1cd.chunk.js.map",
-    "runtime-main.js": "/algoritmos-IA/static/js/runtime-main.8eef04b2.js",
-    "runtime-main.js.map": "/algoritmos-IA/static/js/runtime-main.8eef04b2.js.map",
-    "static/css/2.d9ad5f5c.chunk.css": "/algoritmos-IA/static/css/2.d9ad5f5c.chunk.css",
-    "static/js/2.72b881f4.chunk.js": "/algoritmos-IA/static/js/2.72b881f4.chunk.js",
-    "static/js/2.72b881f4.chunk.js.map": "/algoritmos-IA/static/js/2.72b881f4.chunk.js.map",
-    "index.html": "/algoritmos-IA/index.html",
-    "precache-manifest.705a63122463f5c5d79507022aa2f714.js": "/algoritmos-IA/precache-manifest.705a63122463f5c5d79507022aa2f714.js",
-    "service-worker.js": "/algoritmos-IA/service-worker.js",
-    "static/css/2.d9ad5f5c.chunk.css.map": "/algoritmos-IA/static/css/2.d9ad5f5c.chunk.css.map",
-    "static/css/main.bca7b399.chunk.css.map": "/algoritmos-IA/static/css/main.bca7b399.chunk.css.map",
-    "static/js/2.72b881f4.chunk.js.LICENSE.txt": "/algoritmos-IA/static/js/2.72b881f4.chunk.js.LICENSE.txt"
+    "main.css": "/perceptron/static/css/main.bca7b399.chunk.css",
+    "main.js": "/perceptron/static/js/main.707817ae.chunk.js",
+    "main.js.map": "/perceptron/static/js/main.707817ae.chunk.js.map",
+    "runtime-main.js": "/perceptron/static/js/runtime-main.1aae557c.js",
+    "runtime-main.js.map": "/perceptron/static/js/runtime-main.1aae557c.js.map",
+    "static/css/2.d9ad5f5c.chunk.css": "/perceptron/static/css/2.d9ad5f5c.chunk.css",
+    "static/js/2.72b881f4.chunk.js": "/perceptron/static/js/2.72b881f4.chunk.js",
+    "static/js/2.72b881f4.chunk.js.map": "/perceptron/static/js/2.72b881f4.chunk.js.map",
+    "index.html": "/perceptron/index.html",
+    "precache-manifest.f27683aa5a5674d68420b043dfab3877.js": "/perceptron/precache-manifest.f27683aa5a5674d68420b043dfab3877.js",
+    "service-worker.js": "/perceptron/service-worker.js",
+    "static/css/2.d9ad5f5c.chunk.css.map": "/perceptron/static/css/2.d9ad5f5c.chunk.css.map",
+    "static/css/main.bca7b399.chunk.css.map": "/perceptron/static/css/main.bca7b399.chunk.css.map",
+    "static/js/2.72b881f4.chunk.js.LICENSE.txt": "/perceptron/static/js/2.72b881f4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.8eef04b2.js",
+    "static/js/runtime-main.1aae557c.js",
     "static/css/2.d9ad5f5c.chunk.css",
     "static/js/2.72b881f4.chunk.js",
     "static/css/main.bca7b399.chunk.css",
-    "static/js/main.f846e1cd.chunk.js"
+    "static/js/main.707817ae.chunk.js"
   ]
 }
