@@ -11,7 +11,12 @@ function App() {
   const [perceptronState, setPerceptronState] = useState({
     perceptron : null,
     entrenado: false,
-    x : [],
+    x : [
+      [0, 0],
+      [0, 1],
+      [1, 0],
+      [1, 1]
+    ],
     y : [],    
     cpDrawer: null,
     limiteAlcanzado: false

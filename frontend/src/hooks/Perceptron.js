@@ -20,13 +20,8 @@ class  Perceptron {
 
     fit = async (inputs, outputs) =>{
    
-        const x = inputs || [
-            [3.1, 3.123],
-            [4.12, 1.12],
-            [3.123, 2],
-            [3, 3]
-        ];
-        const y = outputs || [0,0,1,1];
+        const x = inputs;           
+        const y = outputs;
         
         var done = false;            
         var epoca = 0;
