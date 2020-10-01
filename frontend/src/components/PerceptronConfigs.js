@@ -1,26 +1,41 @@
 import React,{useContext, useState} from "react";
 import { useForm, Controller } from "react-hook-form";
-import { Form } from 'react-bootstrap';
+import { Form, FormControl } from 'react-bootstrap';
 
-import { Button, TextField } from '@material-ui/core';
+import { Button, FormControlLabel, Radio, RadioGroup, TextField } from '@material-ui/core';
 import Perceptron from '../hooks/Perceptron.js';
 import { PerceptronContext } from "./PerceptronContext.js";
+import Adaline from '../algoritmos/Adaline.js';
+import Both from "../algoritmos/Both.js"
 
 
+const perceptronTypes = [
+    {
+        label: "Perceptron",
+        value: "perceptron"
+    },
+    {
+        label: "Adaline",
+        value: "adaline"
+    },
+    /*{
+        label: "Ambos",
+        value: "both"
+    }*/
+]
 
-
-
-const PerceptronConfigs = (props) =>  {
-
-    
+const PerceptronConfigs = (props) =>  {    
     //const [perceptron, setPerceptron] = useState(null);
     //const [entrenado, setEntrenado] = useState(false);    
-    const { handleSubmit, register, errors, control } = useForm();
+    const { handleSubmit, register, errors, control, watch } = useForm();
     const {perceptronState, setPerceptronState} = useContext(PerceptronContext);
     const [perceptronErrors, setPerceptronErrors] = useState({});
+
+    const type = watch("type");
     
     const iniciarPesos = async (values) =>{
         console.log(values);
+        let perceptron;
         setPerceptronErrors({});
         if (!perceptronState?.x?.length) {
             setPerceptronErrors({
@@ -30,7 +45,39 @@ const PerceptronConfigs = (props) =>  {
             });
             return;
         }
-        const perceptron = new Perceptron(perceptronState.x[0].length, values.learning_rate, values.max_epic_number, perceptronState.cpDrawer);
+        switch(type) {
+            case "perceptron":
+                perceptron = new Perceptron(perceptronState.x[0].length, values.learning_rate, values.max_epic_number, perceptronState.cpDrawer);
+                break;
+            case "adaline":
+                perceptron = new Adaline(
+                    perceptronState.x[0].length,             
+                    values.max_epic_number,
+                    values.max_error,
+                    values.learning_rate,
+                    perceptronState.cpDrawer
+                );
+                break;
+            case "both":
+                console.log("Ambos")
+                perceptron = new Both(
+                    perceptronState.x[0].length,             
+                    values.max_epic_number,
+                    values.max_error,
+                    values.learning_rate,
+                    perceptronState.cpDrawer
+                );
+                break;
+            default:
+                perceptron = new Adaline(
+                    perceptronState.x[0].length,             
+                    values.max_epic_number,
+                    values.max_error,
+                    values.learning_rate,
+                    perceptronState.cpDrawer
+                );
+        }
+
         setPerceptronState( {
             ...perceptronState,
             perceptron,
@@ -40,7 +87,18 @@ const PerceptronConfigs = (props) =>  {
         x2[0] = perceptron.calcularX2(-5);
         x2[1] = perceptron.calcularX2(5);
         console.log("x2: ", x2);
-        perceptronState.cpDrawer.drawLine(-5, x2[0],5, x2[1], "#0101DF" );
+        perceptronState.cpDrawer.clearCanvas();
+        perceptronState.cpDrawer.drawAxis();
+        perceptronState.x.forEach ((point, index) => {
+            perceptronState.cpDrawer.drawPoint(perceptronState.cpDrawer.XC(point[0]), perceptronState.cpDrawer.YC(point[1]), perceptronState.y[index])             
+        });          
+        if(type === 'adaline'){
+            perceptronState.cpDrawer.drawLine(-5,x2[0],5,x2[1], "#FF0040");
+        }else{
+            perceptronState.cpDrawer.drawLine(-5, x2[0],5, x2[1], "#0101DF" );
+        }
+        
+        
 
       }
       const entrenar = async () =>{     
@@ -54,8 +112,7 @@ const PerceptronConfigs = (props) =>  {
             return;
         }           
         await perceptronState.perceptron.fit(perceptronState.x, perceptronState.y);     
-        const xd = perceptronState.perceptron.errorAcumulado.length >= perceptronState.perceptron.iterations;
-        console.log("limite; ",xd);
+        const xd = perceptronState.perceptron.errorAcumulado.length >= perceptronState.perceptron.iterations;      
         setPerceptronState( {
             ...perceptronState,
             entrenado: true,
@@ -93,12 +150,12 @@ const PerceptronConfigs = (props) =>  {
                 }}
                 helperText={errors?.learning_rate?.message}
                 error={!!errors?.learning_rate}
-                defaultValue = {0.01}
+                defaultValue = {0.1}
                 margin="normal"
-                fullWidth
             />
+            <br />
             <Controller
-                defaultValue ={1000}
+                defaultValue ={50}
                 as={TextField}
                 name="max_epic_number"
                 control={control}
@@ -109,8 +166,60 @@ const PerceptronConfigs = (props) =>  {
                 helperText={errors?.max_epic_number?.message}
                 error={!!errors?.max_epic_number}
                 margin="normal"
-                fullWidth
             />
+            <br />
+            {
+                (type === "adaline" || type === "both") &&
+                <Controller
+                    defaultValue ={0.01}
+                    as={TextField}
+                    name="max_error"
+                    control={control}
+                    id="max_error"
+                    name="max_error"
+                    label="Error"
+                    rules={{ required: "Este campo es requerido" }}
+                    helperText={errors?.max_error?.message}
+                    error={!!errors?.max_error}
+                    margin="normal"
+                />
+            }
+           
+            <Controller
+                defaultValue ={"perceptron"}
+                as={RadioGroup}
+                name="type"
+                control={control}
+                id="type"
+                name="type"
+                rules={{ required: "Este campo es requerido" }}
+                helperText={errors?.type?.message}
+                error={!!errors?.type}
+                margin="normal"
+            >
+                {
+                    perceptronTypes.map((type, index) => 
+                        <FormControlLabel
+                            value={type.value}
+                            key={index}
+                            control={
+                                <Radio
+                                    size="small"
+                                    style={{ color: "#03a9f4" }}
+                                />
+                            }
+                            label={
+                                <span style={{ fontSize: "12pt" }}>
+                                    {type.label}
+                                </span>
+                            }
+                        />
+                    )
+                }
+            </Controller>
+            <br />
+
+        
 
             {
                 perceptronErrors.trainingSet &&
