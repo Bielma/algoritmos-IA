@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/perceptron/static/css/main.bca7b399.chunk.css",
-    "main.js": "/perceptron/static/js/main.ea7aa232.chunk.js",
-    "main.js.map": "/perceptron/static/js/main.ea7aa232.chunk.js.map",
-    "runtime-main.js": "/perceptron/static/js/runtime-main.1aae557c.js",
-    "runtime-main.js.map": "/perceptron/static/js/runtime-main.1aae557c.js.map",
-    "static/css/2.d9ad5f5c.chunk.css": "/perceptron/static/css/2.d9ad5f5c.chunk.css",
-    "static/js/2.70a589fb.chunk.js": "/perceptron/static/js/2.70a589fb.chunk.js",
-    "static/js/2.70a589fb.chunk.js.map": "/perceptron/static/js/2.70a589fb.chunk.js.map",
-    "index.html": "/perceptron/index.html",
-    "precache-manifest.26c42248c8d2ce458446aa19e96b9957.js": "/perceptron/precache-manifest.26c42248c8d2ce458446aa19e96b9957.js",
-    "service-worker.js": "/perceptron/service-worker.js",
-    "static/css/2.d9ad5f5c.chunk.css.map": "/perceptron/static/css/2.d9ad5f5c.chunk.css.map",
-    "static/css/main.bca7b399.chunk.css.map": "/perceptron/static/css/main.bca7b399.chunk.css.map",
-    "static/js/2.70a589fb.chunk.js.LICENSE.txt": "/perceptron/static/js/2.70a589fb.chunk.js.LICENSE.txt"
+    "main.css": "/algoritmos-ia/static/css/main.bca7b399.chunk.css",
+    "main.js": "/algoritmos-ia/static/js/main.0730a7f6.chunk.js",
+    "main.js.map": "/algoritmos-ia/static/js/main.0730a7f6.chunk.js.map",
+    "runtime-main.js": "/algoritmos-ia/static/js/runtime-main.355e01b0.js",
+    "runtime-main.js.map": "/algoritmos-ia/static/js/runtime-main.355e01b0.js.map",
+    "static/css/2.d9ad5f5c.chunk.css": "/algoritmos-ia/static/css/2.d9ad5f5c.chunk.css",
+    "static/js/2.4e6d9656.chunk.js": "/algoritmos-ia/static/js/2.4e6d9656.chunk.js",
+    "static/js/2.4e6d9656.chunk.js.map": "/algoritmos-ia/static/js/2.4e6d9656.chunk.js.map",
+    "index.html": "/algoritmos-ia/index.html",
+    "precache-manifest.4dad3835aa2bd31b40d343822a695b9c.js": "/algoritmos-ia/precache-manifest.4dad3835aa2bd31b40d343822a695b9c.js",
+    "service-worker.js": "/algoritmos-ia/service-worker.js",
+    "static/css/2.d9ad5f5c.chunk.css.map": "/algoritmos-ia/static/css/2.d9ad5f5c.chunk.css.map",
+    "static/css/main.bca7b399.chunk.css.map": "/algoritmos-ia/static/css/main.bca7b399.chunk.css.map",
+    "static/js/2.4e6d9656.chunk.js.LICENSE.txt": "/algoritmos-ia/static/js/2.4e6d9656.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.1aae557c.js",
+    "static/js/runtime-main.355e01b0.js",
     "static/css/2.d9ad5f5c.chunk.css",
-    "static/js/2.70a589fb.chunk.js",
+    "static/js/2.4e6d9656.chunk.js",
     "static/css/main.bca7b399.chunk.css",
-    "static/js/main.ea7aa232.chunk.js"
+    "static/js/main.0730a7f6.chunk.js"
   ]
 }
