@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Perceptron from '../pages/Perceptron';
 import {PerceptronContext} from '../components/PerceptronContext';
-import PerceptronA from '../hooks/Perceptron.js';
+
 
 function App() { 
   const [perceptronState, setPerceptronState] = useState({
@@ -14,7 +14,8 @@ function App() {
     x : [],
     y : [],    
     cpDrawer: null,
-    limiteAlcanzado: false
+    limiteAlcanzado: false,
+    csvLeido: false
   });
 
  

@@ -1,24 +1,24 @@
 import React,{useContext, useState} from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Form } from 'react-bootstrap';
-
 import { Button, TextField } from '@material-ui/core';
-import Perceptron from '../hooks/Perceptron.js';
+import Perceptron from '../algoritmos/Perceptron.js';
 import { PerceptronContext } from "./PerceptronContext.js";
-
+import CsvReader from './CsvReader.js';
 
 
 
 
 const PerceptronConfigs = (props) =>  {
-
-    
-    //const [perceptron, setPerceptron] = useState(null);
-    //const [entrenado, setEntrenado] = useState(false);    
+        
+    //const [csvLeido, setCsvLeido] = useState(false);    
     const { handleSubmit, register, errors, control } = useForm();
     const {perceptronState, setPerceptronState} = useContext(PerceptronContext);
     const [perceptronErrors, setPerceptronErrors] = useState({});
-    
+    var obj_csv = {
+        size:0,
+        dataFile:[]
+    };
     const iniciarPesos = async (values) =>{
         console.log(values);
         setPerceptronErrors({});
@@ -37,10 +37,10 @@ const PerceptronConfigs = (props) =>  {
         
         });       
         const x2 = []; 
-        x2[0] = perceptron.calcularX2(-5);
-        x2[1] = perceptron.calcularX2(5);
+        x2[0] = perceptron.calcularX2(-10);
+        x2[1] = perceptron.calcularX2(10);
         console.log("x2: ", x2);
-        perceptronState.cpDrawer.drawLine(-5, x2[0],5, x2[1], "#0101DF" );
+        perceptronState.cpDrawer.drawLine(-10, x2[0],10, x2[1], "#0101DF" );
 
       }
       const entrenar = async () =>{     
@@ -76,10 +76,52 @@ const PerceptronConfigs = (props) =>  {
         });           
     }
       
-  
+  const subir =(input)=>{
+   
+      if(input != undefined){
+        console.log(input);
+    
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+                reader.readAsBinaryString(input.files[0]);
+            reader.onload = function (e) {
+            console.log(e);
+            obj_csv.size = e.total;
+            obj_csv.dataFile = e.target.result
+                    console.log(obj_csv.dataFile)
+                    parseData(obj_csv.dataFile)
+                    
+            }
+            }
+        }
+    
+
+
+  }
+const parseData=(data) =>{
+    let csvData = [];
+    let lbreak = data.split("\n");
+    lbreak.forEach(res => {
+        csvData.push(res.split(","));
+    });
+    console.table(csvData);
+}
 
     return <>
+        {  
+            !perceptronState.csvLeido &&
+                <>                   
+                    <CsvReader/>
+                </>
+        }
+
+
+        {
+
+        perceptronState.csvLeido &&
+            <div>
         <Form onSubmit={handleSubmit(iniciarPesos)} className="">
+           
             <Controller
                 as={TextField}
                 name="learning_rate"
@@ -132,7 +174,8 @@ const PerceptronConfigs = (props) =>  {
         <Form onSubmit={handleSubmit(reiniciar)} className="">                        
             <Button className="mt-4" type="sumbit" fullWidth color="primary" style={{color: "#03A9F4"}}>Reiniciar</Button>
         </Form>
-
+        </div>
+    }
     </>
 }
 

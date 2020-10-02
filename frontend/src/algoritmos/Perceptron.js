@@ -50,8 +50,8 @@ class  Perceptron {
                         this.w[k+1] += this.learningRate * this.error * x[j][k];
                         console.log("w %d Despues : %f ",k+1, this.w[k+1]);                        
                     }
-                    x2[0] = this.calcularX2(-5);
-                    x2[1] = this.calcularX2(5);
+                    x2[0] = this.calcularX2(-10);
+                    x2[1] = this.calcularX2(10);
                     console.log("x2: ", x2);
                     console.log("w: ", this.w);
                  
@@ -60,7 +60,7 @@ class  Perceptron {
                     x.forEach ((point, index) => {
                         this.estado.drawPoint(this.estado.XC(point[0]), this.estado.YC(point[1]), y[index])    
                     })                    
-                    this.estado.drawLine(-5,x2[0],5,x2[1], "#0101DF")
+                    this.estado.drawLine(-10,x2[0],10,x2[1], "#0101DF")
                     await new Promise(r => setTimeout(r, 30));
                     
                     
