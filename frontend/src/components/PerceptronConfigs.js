@@ -15,10 +15,7 @@ const PerceptronConfigs = (props) =>  {
     const { handleSubmit, register, errors, control } = useForm();
     const {perceptronState, setPerceptronState} = useContext(PerceptronContext);
     const [perceptronErrors, setPerceptronErrors] = useState({});
-    var obj_csv = {
-        size:0,
-        dataFile:[]
-    };
+    const sizeEjes = 10;
     const iniciarPesos = async (values) =>{
         console.log(values);
         setPerceptronErrors({});
@@ -30,17 +27,22 @@ const PerceptronConfigs = (props) =>  {
             });
             return;
         }
-        const perceptron = new Perceptron(perceptronState.x[0].length, values.learning_rate, values.max_epic_number, perceptronState.cpDrawer);
+        const perceptron = new Perceptron(
+            perceptronState.x[0].length, 
+            values.learning_rate, 
+            values.max_epic_number, 
+            perceptronState.cpDrawer, 
+            sizeEjes);
         setPerceptronState( {
             ...perceptronState,
             perceptron,
         
         });       
         const x2 = []; 
-        x2[0] = perceptron.calcularX2(-10);
-        x2[1] = perceptron.calcularX2(10);
+        x2[0] = perceptron.calcularX2(-sizeEjes);
+        x2[1] = perceptron.calcularX2(sizeEjes);
         console.log("x2: ", x2);
-        perceptronState.cpDrawer.drawLine(-10, x2[0],10, x2[1], "#0101DF" );
+        perceptronState.cpDrawer.drawLine(-sizeEjes, x2[0], sizeEjes, x2[1], "#0101DF" );
 
       }
       const entrenar = async () =>{     
@@ -72,41 +74,11 @@ const PerceptronConfigs = (props) =>  {
             perceptron : null,
             entrenado: false,
             x : [],
-            y : [],                                    
+            y : [],   
+            csvLeido: false                                 
         });           
     }
       
-  const subir =(input)=>{
-   
-      if(input != undefined){
-        console.log(input);
-    
-        if (input.files && input.files[0]) {
-            let reader = new FileReader();
-                reader.readAsBinaryString(input.files[0]);
-            reader.onload = function (e) {
-            console.log(e);
-            obj_csv.size = e.total;
-            obj_csv.dataFile = e.target.result
-                    console.log(obj_csv.dataFile)
-                    parseData(obj_csv.dataFile)
-                    
-            }
-            }
-        }
-    
-
-
-  }
-const parseData=(data) =>{
-    let csvData = [];
-    let lbreak = data.split("\n");
-    lbreak.forEach(res => {
-        csvData.push(res.split(","));
-    });
-    console.table(csvData);
-}
-
     return <>
         {  
             !perceptronState.csvLeido &&

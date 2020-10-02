@@ -1,6 +1,6 @@
-
-const MAX_Y = 10, MAX_X = 10;
-const MIN_Y = -10, MIN_X = -10;
+const MAX = 10;
+const MAX_Y = MAX, MAX_X = MAX;
+const MIN_Y = -MAX, MIN_X = -MAX;
 
 class CPDrawer {
     constructor(canvas) {

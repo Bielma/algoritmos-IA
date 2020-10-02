@@ -3,16 +3,17 @@ import {  PerceptronContext} from "../components/PerceptronContext";
 
 class  Perceptron {
       
-    constructor(size, lr, it, cp){
+    constructor(size, lr, it, cp, sj){
 
         this.estado = cp;
 		this.w  = [];
 		this.learningRate= parseFloat(lr) || 0.01;
-        this.iterations =  parseFloat(it) || 10;
+        this.iterations =  parseFloat(it) || 100;
         this.error = 0;
         this.errorAcumulado = [];        
+        this.MaxAxis = sj;
         for(var i = 0; i<size+1  ; i++){
-            this.w[i] = Math.random() * (5 - (-5)) + (-5);
+            this.w[i] = Math.random() * (sj - (-sj)) + (-sj);
         }        
        
 	}
@@ -50,8 +51,8 @@ class  Perceptron {
                         this.w[k+1] += this.learningRate * this.error * x[j][k];
                         console.log("w %d Despues : %f ",k+1, this.w[k+1]);                        
                     }
-                    x2[0] = this.calcularX2(-10);
-                    x2[1] = this.calcularX2(10);
+                    x2[0] = this.calcularX2(- this.MaxAxis);
+                    x2[1] = this.calcularX2( this.MaxAxis);
                     console.log("x2: ", x2);
                     console.log("w: ", this.w);
                  
@@ -60,7 +61,7 @@ class  Perceptron {
                     x.forEach ((point, index) => {
                         this.estado.drawPoint(this.estado.XC(point[0]), this.estado.YC(point[1]), y[index])    
                     })                    
-                    this.estado.drawLine(-10,x2[0],10,x2[1], "#0101DF")
+                    this.estado.drawLine(- this.MaxAxis,x2[0], this.MaxAxis,x2[1], "#0101DF")
                     await new Promise(r => setTimeout(r, 30));
                     
                     
