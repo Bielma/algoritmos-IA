@@ -4,35 +4,51 @@ import CSVReader from 'react-csv-reader'
 
 const CsvReader = (props) =>{
   const {perceptronState, setPerceptronState} = useContext(PerceptronContext);
+  let inputs = [];
+  let outputs = [];
+  let uwu = [];
+  const addInputs = (data) =>{
+    
+    
+    for(let i = 1; i<data.length;i++){      
+        
+        for(var j = 0; j<data[0].length;j++){
+          uwu.push(parseFloat(data[i][j]));      
+        }                
+        inputs.push(uwu);   
+        uwu = [];
+          
+        
+    }
+    console.log(inputs);
+  }
+
   const agregarPuntos = (data) => {
     console.log(data);
-    let inputs = [];
-    let outputs = [];
-    data.forEach ((point, index) => {
-      if(index !== 0){
-        /*let target = 0;
-        if(point[4] === 'Setosa'){
-          target = 1;          
-        }*/
-        perceptronState.cpDrawer.drawPoint(perceptronState.cpDrawer.XC(parseFloat(point[0])), 
-          perceptronState.cpDrawer.YC(parseFloat(point[1])), parseFloat(point[2]) )    
-        inputs.push([parseFloat(point[0]), parseFloat(point[1])])
-        outputs.push(parseFloat(point[2]))
-        //outputs.push(target)
-      }
-      
-   })          
+    for(let i = 1; i<data.length;i++){                            
+      outputs.push(parseFloat(data[i]));       
+    }
+    console.log(outputs);
+    inputs.forEach ((point, index) => {           
+        perceptronState.cpDrawer.drawPoint(perceptronState.cpDrawer.XC(point[0]), 
+          perceptronState.cpDrawer.YC(point[1]), outputs[index] )                               
+   })       
 
    setPerceptronState({
      ...perceptronState,
      x: inputs, 
-     y:outputs,
+     y: outputs,
      csvLeido :true
    })
 
   }
 
-    return <>
+    return <>    
+       <span className="error">{"Inputs File"}</span>
+      <CSVReader onFileLoaded={(data, fileInfo) =>         
+        addInputs(data)
+      } />
+      <span className="error">{"Outputs File"}</span>
       <CSVReader onFileLoaded={(data, fileInfo) =>         
         agregarPuntos(data)
       } />
