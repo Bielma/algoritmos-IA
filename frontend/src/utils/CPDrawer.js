@@ -100,7 +100,7 @@ class CPDrawer {
         //console.log("clase: ", value);        
         const ctx = this.canvas.getContext("2d");
         var density = 5;
-        var cont = 0;
+        
         for (let x = -5; x < 5; x += 0.1) {
             for (let y = -5; y< 5; y += 0.1) {
                 
@@ -111,26 +111,27 @@ class CPDrawer {
                     console.log("out:" , out);
                 }*/
                 
-                for(let k = 0; k < out.length; k++){
-                    if (out[k] > mayor)
-                    {
-                        mayor = out[k];
-                        ind = k;
-                    }
-                }
                 
-                ctx.fillStyle = this.clases[ind].color;
-                ctx.fillRect(
+                    if (out[0] > out[1])
+                    {
+                        ctx.fillStyle = this.clases[1].color;
+                    }else{
+                        ctx.fillStyle = this.clases[0].color;
+                    }
+                
+                
+               
+                /*ctx.fillRect(
                     this.XC(x)-1,
                     this.YC(y)-1,
                     2, 
                     2,
-                )
-                // ctx.fillRect(
-                //     this.XC(x) - density / 2 - 1, 
-                //     this.YC(y) - density / 2 - 1, 
-                //     density + 2, density + 2);
-                //cont++;
+                )*/
+                 ctx.fillRect(
+                     this.XC(x) - density / 2 - 1, 
+                     this.YC(y) - density / 2 - 1, 
+                     density + 2, density + 2);
+                
                 
             }
         }
