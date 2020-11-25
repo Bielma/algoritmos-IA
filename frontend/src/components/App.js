@@ -17,7 +17,20 @@ function App() {
     limiteAlcanzado: false, 
     claseSelect: "1",
     iniciado: false,
-    meanError: []
+    meanError: [],
+    clases: [{
+      label: "clase1",
+      color: "#0101DF",
+      value: 1
+    },
+    {
+      label: "clase2", 
+      color: "#DF0101",
+      value: 2
+  }
+  
+  ]
+
   });
  
   return (

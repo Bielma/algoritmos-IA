@@ -3,8 +3,8 @@ import { useForm, Controller } from "react-hook-form";
 import { Form } from 'react-bootstrap';
 import { Button, FormControlLabel, Radio, RadioGroup, TextField, FormLabel,FormControl} from '@material-ui/core';
 import { PerceptronContext } from "./PerceptronContext.js";
-// import Adaline from '../algoritmos/Adaline.js';
 import BackPropagation from '../algoritmos/BackPropagationV2.js';
+import CsvReader from './CsvReader';
 
 
 const numCapas = [
@@ -28,7 +28,7 @@ const PerceptronConfigs = (props) => {
             defaultValues: {
                 learning_rate: 0.1,
                 max_error: 0.01,
-                max_epic_number: 5000
+                max_epic_number: 1000
             }
         }
     );
@@ -38,74 +38,10 @@ const PerceptronConfigs = (props) => {
     const [initConf, setInitConf] = useState({});
     const [claseSelect, setClaseSelect] = useState("1");
 
-    const type = watch("type");
+  
 
-    const cambiarClase = (event) => {
-        console.log("cambio clase");
-        console.log(event.target.value);
-        setClaseSelect(event.target.value);
-        setPerceptronState({
-            ...perceptronState,
-           claseSelect: event.target.value
-        });
-    }
-    const iniciar = async (values) => {
-        console.log(values);
-        if (values.type === 'unacapa') {
-            setInitConf({
-                num_class: values.max_class,
-                num_capas: 3,
-                num_n_capa1: values.max_capa1
-            });
-        } else {
-            setInitConf({
-                num_class: values.max_class,
-                num_capas: 4,
-                num_n_capa1: values.max_capa1,
-                num_n_capa2: values.max_capa2
-            });
-        }
 
-        for (let i = 1; i <= values.max_class; i++) {
-            clases.push({
-                label: "clase" + i,
-                color: randomColor(),
-                value: "" + i
-            })
-        }
-        setPerceptronState({
-            ...perceptronState,
-            clases: clases,
-            iniciado: true
-        });
-        setIniciado(true);
-    }
 
-    const randomColor = () => {
-        const hexadecimal = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F");
-        let color_aleatorio = "#";
-        for (let i = 0; i < 6; i++) {
-            let posarray = aleatorio(0, hexadecimal.length);
-            color_aleatorio += hexadecimal[posarray];
-        }
-        return color_aleatorio;
-    }
-
-    const changeColor = (event, index) => {
-        const { clases } = perceptronState;
-        clases[index].color = event.target.value;
-        setPerceptronState({
-            ...perceptronState,
-            clases
-        })
-    }
-
-    const aleatorio = (inferior, superior) => {
-        const numPosibilidades = superior - inferior;
-        let aleat = Math.random() * numPosibilidades
-        aleat = Math.floor(aleat)
-        return parseInt(inferior) + aleat
-    }
 
     const iniciarPesos = async (values) => {
                     
@@ -126,8 +62,8 @@ const PerceptronConfigs = (props) => {
         }
         neuronsPerLayer.push(initConf.num_class);
         const backP = new BackPropagation(
-            initConf.num_capas,
-            neuronsPerLayer,
+            3,
+            [2,5,2],
             values.learning_rate,
             values.max_error,
             values.max_epic_number,
@@ -184,7 +120,7 @@ const PerceptronConfigs = (props) => {
     }
 
 
-    if (iniciado) {
+    if (perceptronState.csvLeido) {
         return (
             <>
                 
@@ -233,41 +169,8 @@ const PerceptronConfigs = (props) => {
                         error={!!errors?.max_error}
                         margin="normal"
                     />
-                    <p></p>
-                    <FormControl component="fieldset">
-                    <FormLabel component="legend">Clases</FormLabel>
-
-                        <RadioGroup aria-label="clases" name="clases" value={claseSelect} onChange={cambiarClase}>
-                        {
-                            clases.map((type, index) =>
-                                <>
-                                    <FormControlLabel
-                                        value={type.value}
-                                        key={index}
-                                        control={
-                                            <Radio
-                                                size="small"
-                                                style={{ color: type.color }}
-                                            />
-                                        }
-                                        label={
-                                            <span style={{ fontSize: "12pt" }}>
-                                                {type.label}
-                                            </span>
-                                        }
-                                    />
-                                    <input
-                                        type="color"
-                                        value={type.color}
-                                        onChange={(e) => changeColor(e, index)}
-                                    />
-                                </>
-                            )
-                        }
-                    
-                        </RadioGroup>
-                    </FormControl>
-
+                  
+                   
                     {
                         perceptronErrors.trainingSet &&
                         <span className="error">{perceptronErrors.trainingSet.message}</span>
@@ -292,101 +195,7 @@ const PerceptronConfigs = (props) => {
         );
     } else {
         return (
-            <>
-                <Form onSubmit={handleSubmit(iniciar)} className="">
-                    <Controller
-                        defaultValue={3}
-                        as={TextField}
-                        name="max_class"
-                        control={control}
-                        id="max_class"
-                        name="max_class"
-                        label="Numero de clases"
-                        rules={{ required: "Este campo es requerido" }}
-                        helperText={errors?.max_error?.message}
-                        error={!!errors?.max_error}
-                        margin="normal"
-                    />
-
-                    <p></p>
-                    <span className="">{"Numero de capas ocultas"}</span>
-                    <Controller
-                        defaultValue={"unacapa"}
-                        as={RadioGroup}
-                        name="type"
-                        control={control}
-                        id="type"
-                        name="type"
-                        rules={{ required: "Este campo es requerido" }}
-                        helperText={errors?.type?.message}
-                        error={!!errors?.type}
-                        margin="normal"
-                    >
-                        {
-                            numCapas.map((type, index) =>
-                                <FormControlLabel
-                                    value={type.value}
-                                    key={index}
-                                    control={
-                                        <Radio
-                                            size="small"
-                                            style={{ color: "#03a9f4" }}
-                                        />
-                                    }
-                                    label={
-                                        <span style={{ fontSize: "12pt" }}>
-                                            {type.label}
-                                        </span>
-                                    }
-                                />
-                            )
-                        }
-                    </Controller>
-
-
-                    <Controller
-                        defaultValue={5}
-                        as={TextField}
-                        name="max_capa1"
-                        control={control}
-                        id="max_capa1"
-                        name="max_capa1"
-                        label="Neuronas en la capa 1"
-                        rules={{ required: "Este campo es requerido" }}
-                        helperText={errors?.max_error?.message}
-                        error={!!errors?.max_error}
-                        margin="normal"
-                    />
-
-
-                    {
-                        type == 'doscapas' &&
-                        <Controller
-                            defaultValue={5}
-                            as={TextField}
-                            name="max_capa2"
-                            control={control}
-                            id="max_capa2"
-                            name="max_capa2"
-                            label="Neuronas en la capa 2"
-                            rules={{ required: "Este campo es requerido" }}
-                            helperText={errors?.max_error?.message}
-                            error={!!errors?.max_error}
-                            margin="normal"
-                        />
-
-                    }
-
-
-                    <Button
-                        className="mt-4"
-                        type="sumbit"
-                        fullWidth color="primary"
-                        style={{ color: "#03A9F4" }}
-                        onSubmit
-                    >Continuar</Button>
-                </Form>
-            </>
+           <CsvReader/>
         );
     }
 
