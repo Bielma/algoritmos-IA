@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import { Button, TextField } from '@material-ui/core';
 import Perceptron from '../algoritmos/Perceptron.js';
 import { PerceptronContext } from "./PerceptronContext.js";
-import CsvReader from './CsvReader.js';
+import CsvReader from './CsvReader';
 
 
 
