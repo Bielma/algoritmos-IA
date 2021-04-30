@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import { Button, FormControlLabel, Radio, RadioGroup, TextField, FormLabel,FormControl} from '@material-ui/core';
 import { PerceptronContext } from "./PerceptronContext.js";
 // import Adaline from '../algoritmos/Adaline.js';
-import BackPropagation from '../algoritmos/BackPropagationV2.js';
+import BackPropagation from '../algoritmos/BackPropagationV2';
 
 
 const numCapas = [
@@ -139,7 +139,7 @@ const PerceptronConfigs = (props) => {
             ...perceptronState,
             perceptron: backP,
         });
-        perceptronState.cpDrawer.drawBarrido(backP);    
+        //perceptronState.cpDrawer.drawBarrido(backP);    
         console.log(backP.layers);
 
     }
@@ -295,7 +295,7 @@ const PerceptronConfigs = (props) => {
             <>
                 <Form onSubmit={handleSubmit(iniciar)} className="">
                     <Controller
-                        defaultValue={3}
+                        defaultValue={2}
                         as={TextField}
                         name="max_class"
                         control={control}
