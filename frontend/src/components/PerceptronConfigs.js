@@ -3,28 +3,12 @@ import { useForm, Controller } from "react-hook-form";
 import { Form, FormControl } from 'react-bootstrap';
 
 import { Button, FormControlLabel, Radio, RadioGroup, TextField } from '@material-ui/core';
-import Perceptron from '../hooks/Perceptron.js';
+
 import { PerceptronContext } from "./PerceptronContext.js";
 import Adaline from '../algoritmos/Adaline.js';
 import {sigmoidal, tangente, relu} from "../algoritmos/FuncionesActivacion"
 
 
-
-const funtionsTypes = [
-    {
-        label: "Sigmoidal",
-        value: "sigmoidal"
-    },
-    {
-        label: "TanH",
-        value: "tangente"
-    },
-    {
-        label: "Lineal",
-        value: "lineal"
-    }
-
-]
 
 const PerceptronConfigs = (props) => {
     
@@ -48,9 +32,9 @@ const PerceptronConfigs = (props) => {
         }
         perceptron = new Adaline(
             perceptronState.x[0].length,
-            values.max_epic_number,
-            values.max_error,
-            values.learning_rate,
+            100,
+            0.01,
+            0.1,
             perceptronState.cpDrawer,
             (type==='sigmoidal') ? sigmoidal : (type==='tangente') ? sigmoidal : sigmoidal
         );
@@ -115,90 +99,7 @@ const PerceptronConfigs = (props) => {
 
     return <>
         <Form onSubmit={handleSubmit(iniciarPesos)} className="">
-            <Controller
-                as={TextField}
-                name="learning_rate"
-                control={control}
-                id="learning_rate"
-                name="learning_rate"
-                label="Nivel de aprendizaje"
-                rules={{
-                    required: "Este campo es requerido",
-                    validate: value => (parseFloat(value, 10) > 0 && parseFloat(value, 10) <= 1) || "El valor debe ser entre 0 y 1",
-                }}
-                helperText={errors?.learning_rate?.message}
-                error={!!errors?.learning_rate}
-                defaultValue={0.1}
-                margin="normal"
-            />
-            <br />
-            <Controller
-                defaultValue={100}
-                as={TextField}
-                name="max_epic_number"
-                control={control}
-                id="max_epic_number"
-                name="max_epic_number"
-                label="Número máximo de épocas"
-                rules={{ required: "Este campo es requerido" }}
-                helperText={errors?.max_epic_number?.message}
-                error={!!errors?.max_epic_number}
-                margin="normal"
-            />
-            <br />
-
-            <Controller
-                defaultValue={0.01}
-                as={TextField}
-                name="max_error"
-                control={control}
-                id="max_error"
-                name="max_error"
-                label="Error"
-                rules={{ required: "Este campo es requerido" }}
-                helperText={errors?.max_error?.message}
-                error={!!errors?.max_error}
-                margin="normal"
-            />
-
-
-            <Controller
-                defaultValue={"sigmoidal"}
-                as={RadioGroup}
-                name="type"
-                control={control}
-                id="type"
-                name="type"
-                rules={{ required: "Este campo es requerido" }}
-                helperText={errors?.type?.message}
-                error={!!errors?.type}
-                margin="normal"
-            >
-                {
-                    funtionsTypes.map((type, index) =>
-                        <FormControlLabel
-                            value={type.value}
-                            key={index}
-                            control={
-                                <Radio
-                                    size="small"
-                                    style={{ color: "#03a9f4" }}
-                                />
-                            }
-                            label={
-                                <span style={{ fontSize: "12pt" }}>
-                                    {type.label}
-                                </span>
-                            }
-                        />
-                    )
-                }
-            </Controller>
-
-            <br />
-
-
-
+          
             {
                 perceptronErrors.trainingSet &&
                 <span className="error">{perceptronErrors.trainingSet.message}</span>
