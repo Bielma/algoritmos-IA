@@ -17,7 +17,7 @@ const PerceptronConfigs = (props) => {
     const [perceptronErrors, setPerceptronErrors] = useState({});
 
     const type = watch("type");
-
+    const n = 12
     const iniciarPesos = async (values) => {
 
         let perceptron;
@@ -25,7 +25,7 @@ const PerceptronConfigs = (props) => {
 
         let x = []
         let y = []
-        const n = 12
+       
 
         for (let i = 0; i < data.length - n; i++) {
             let adalineInput = []
@@ -79,6 +79,7 @@ const PerceptronConfigs = (props) => {
     }
 
     const entrenar = async () => {
+        
         setPerceptronErrors({});
         if (!perceptronState.perceptron) {
             setPerceptronErrors({
@@ -88,12 +89,21 @@ const PerceptronConfigs = (props) => {
             });
             return;
         }
+        perceptronState.x.forEach((item, index) => {
+            perceptronState.perceptron.fit(item, perceptronState.y[index]);
+            index < n 
+                ? perceptronState.data[index].corregido = (perceptronState.data[index].ruido)
+                : perceptronState.data[index].corregido = (perceptronState.perceptron.predict(item))
+            
+            
+        });
         
-        await perceptronState.perceptron.fit(perceptronState.x, perceptronState.y);
+        
         
         setPerceptronState({
             ...perceptronState,
             entrenado: true,            
+               
         });
         
     }

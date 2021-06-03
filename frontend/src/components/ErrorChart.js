@@ -47,11 +47,11 @@ const ErrorChart = (props) =>  {
               top: 5, right: 30, left: 20, bottom: 5,
             }}
           >          
-             <Line type="monotone" dataKey="original" stroke="#1976d2" dot={false} />
-             <Line type="monotone" dataKey="ruido" stroke="#82ca9d" dot={false} />
+             <Line type="monotone" dataKey="original" stroke="#82ca9d" dot={false} />
+             <Line type="monotone" dataKey="ruido" stroke="#4C485E" dot={false} />
              {
                perceptronState.entrenado &&
-                <Line type="monotone" dataKey="corregido" stroke="#000000" dot={false} />
+                <Line type="monotone" dataKey="corregido" stroke="#2D04E8" dot={false} />
              }
              
               <CartesianGrid stroke="#ccc" />
