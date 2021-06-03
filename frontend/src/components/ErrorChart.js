@@ -6,78 +6,57 @@ import { PerceptronContext } from "./PerceptronContext";
 
 const ErrorChart = (props) =>  {
     const {perceptronState} = useContext(PerceptronContext);
-    const MAX_ELEMENTS_TO_SHOW = 20;
+    
     let [dataToShow, setDataToShow] = useState([]);
-    let [itemsViewed, setItemsViewed] = useState(0);
-    let [infoGrouped, setInfoGrouped] = useState([]);
+    const [dataSeno, setDataSeno] = useState([]);
+    const [dataSenoRuido, setDataSenoRuido] = useState([]);
 
+    
 
     useEffect(() => {
-      setInfoGrouped(groupElements(perceptronState.perceptron.errorAcumulado));
-      let firstDataToShow = groupElements(perceptronState.perceptron.errorAcumulado);
-      setDataToShow(firstDataToShow[itemsViewed].data);
+    setDataSeno(perceptronState.data);        
+    // setDataToShow(getHarcodedInfo());
     }, [])
 
-    /*const getHarcodedInfo = () => {
-      let data = [];
-      for(let i = 0; i < 33; i++){
-        data.push({'epoca': i+1, 'error': Math.floor(Math.random() * (20 - 1)) + 1})
-      }
-      return data;
-    }*/
+   
 
-    const groupElements = (data) => {
-      let infoGrouped = [{'index': 0, 'data': []}],
-        objectIndex = 0,
-        insertedElements = 1;
-      for(let i = 0; i < data.length; i++){
-        
-        if(insertedElements == MAX_ELEMENTS_TO_SHOW){
-          infoGrouped[objectIndex].data.push(data[i])
-          objectIndex++;
-          infoGrouped.push({'index': objectIndex, 'data': []})
-          insertedElements = 1;
-          continue
-        } else {
-          infoGrouped[objectIndex].data.push(data[i])
-        }
-
-        insertedElements++;
+    const seno= () => {
+      let data = []
+      for (let x = 0; x < 100; x++) {
+        const y = Math.sin(x)        
+        const yRuido = Math.sin(x + Math.floor(Math.random() * (3- 1)))
+        data[x] = {          
+          x: x, 
+          original: y,
+          ruido: yRuido,
+          corregido: 0
+        }  
       }
-     return infoGrouped;
+      return data
     }
-
-    const nextData = () => {
-      setItemsViewed(itemsViewed == infoGrouped.length ? itemsViewed = infoGrouped.length-1: ++itemsViewed)
-      if(itemsViewed < infoGrouped.length){
-        setDataToShow(infoGrouped[itemsViewed].data);
-      }
-    }
-
-    const afterData = () => {
-      setItemsViewed(itemsViewed == 0 ? itemsViewed = 0: --itemsViewed)
-      if(itemsViewed < infoGrouped.length){
-        setDataToShow(infoGrouped[itemsViewed].data);
-      }
-    }
-
+   
+    
     return <>
-        <Button onClick={() => afterData()} className="m-4"  variant="contained" color="primary">Anteriores {MAX_ELEMENTS_TO_SHOW}</Button>
-        <Button  onClick={() => nextData()} className="m-4"  variant="contained" color="primary">Siguientes {MAX_ELEMENTS_TO_SHOW}</Button>
-        <br></br>
-        <span>Mostrando un total de {perceptronState.perceptron.errorAcumulado.length}</span>
+       
+          
         <ResponsiveContainer>               
           <LineChart 
             //data={perceptronState.perceptron.errorAcumulado} 
-            data={dataToShow}
+            data={dataSeno}
             margin={{
               top: 5, right: 30, left: 20, bottom: 5,
             }}
           >          
-            <Line type="monotone" dataKey="error" stroke="#1976d2" activeDot={{ r: 8 }}/>
+             <Line type="monotone" dataKey="original" stroke="#1976d2" dot={false} />
+             <Line type="monotone" dataKey="ruido" stroke="#82ca9d" dot={false} />
+             {
+               perceptronState.entrenado &&
+                <Line type="monotone" dataKey="corregido" stroke="#000000" dot={false} />
+             }
+             
               <CartesianGrid stroke="#ccc" />
-              <XAxis dataKey="epoca" interval={0} angle={60} dx={20}/>
-              <YAxis />
+              <XAxis dataKey="x" interval={3} />
+              <YAxis interval="preserveStartEnd" />
               <Tooltip />
               <Legend />
           </LineChart>

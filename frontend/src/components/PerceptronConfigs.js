@@ -6,12 +6,12 @@ import { Button, FormControlLabel, Radio, RadioGroup, TextField } from '@materia
 
 import { PerceptronContext } from "./PerceptronContext.js";
 import Adaline from '../algoritmos/Adaline.js';
-import {sigmoidal, tangente, relu} from "../algoritmos/FuncionesActivacion"
+import { sigmoidal, tangente, relu } from "../algoritmos/FuncionesActivacion"
 
 
 
 const PerceptronConfigs = (props) => {
-    
+
     const { handleSubmit, register, errors, control, watch } = useForm();
     const { perceptronState, setPerceptronState } = useContext(PerceptronContext);
     const [perceptronErrors, setPerceptronErrors] = useState({});
@@ -19,68 +19,83 @@ const PerceptronConfigs = (props) => {
     const type = watch("type");
 
     const iniciarPesos = async (values) => {
-        console.log(values);
+
         let perceptron;
-        setPerceptronErrors({});
-        if (!perceptronState?.x?.length) {
-            setPerceptronErrors({
-                trainingSet: {
-                    message: "Agregue datos de entrenamiento"
-                }
-            });
-            return;
+        const data = seno()
+
+        let x = []
+        let y = []
+        const n = 12
+
+        for (let i = 0; i < data.length - n; i++) {
+            let adalineInput = []
+            const _data = data.slice(i, n+i)
+            for (let j = 0; j < _data.length; j++) {
+                adalineInput.push(_data[j].ruido)                                                
+            }                    
+            y.push(data[n+i]?.ruido)
+            x[i] = adalineInput
+            
+            
         }
+
+
         perceptron = new Adaline(
-            perceptronState.x[0].length,
+            n,
             100,
             0.01,
             0.1,
             perceptronState.cpDrawer,
-            (type==='sigmoidal') ? sigmoidal : (type==='tangente') ? sigmoidal : sigmoidal
         );
-        
+
 
         setPerceptronState({
             ...perceptronState,
             perceptron,
+            data,
+            x,
+            y
 
         });
-        const x2 = [];
-        x2[0] = perceptron.calcularX2(-5);
-        x2[1] = perceptron.calcularX2(5);
-        console.log("x2: ", x2);
-        perceptronState.cpDrawer.clearCanvas();
-        perceptronState.cpDrawer.drawAxis();
-        perceptronState.x.forEach((point, index) => {
-            perceptronState.cpDrawer.drawPoint(perceptronState.cpDrawer.XC(point[0]), perceptronState.cpDrawer.YC(point[1]), perceptronState.y[index])
-        });
-        
-            perceptronState.cpDrawer.drawLine(-5, x2[0], 5, x2[1], "#FF0040");
-        
-        //    perceptronState.cpDrawer.drawLine(-5, x2[0], 5, x2[1], "#0101DF");
-        
-
-
 
     }
+    
+    const seno = () => {
+        let data = []
+
+
+        for (let x = 0; x < 100; x++) {
+            const y = Math.sin(x)
+            const yRuido = Math.sin(x + Math.floor(Math.random() * (3 - 1)))
+            data[x] = {
+                x: x,
+                original: y,
+                ruido: yRuido,
+                corregido: 0
+            }
+        }
+        return data;
+
+    }
+
     const entrenar = async () => {
         setPerceptronErrors({});
         if (!perceptronState.perceptron) {
             setPerceptronErrors({
                 "trainedPerceptron": {
-                    message: "Primero inicialice el perceptron"
+                    message: "Primero escoja una señal"
                 }
             });
             return;
         }
+        
         await perceptronState.perceptron.fit(perceptronState.x, perceptronState.y);
-        const xd = perceptronState.perceptron.errorAcumulado.length >= perceptronState.perceptron.iterations;
+        
         setPerceptronState({
             ...perceptronState,
-            entrenado: true,
-            limiteAlcanzado: xd
+            entrenado: true,            
         });
-        console.log(perceptronState.perceptron.w);
+        
     }
 
     const reiniciar = () => {
@@ -99,7 +114,7 @@ const PerceptronConfigs = (props) => {
 
     return <>
         <Form onSubmit={handleSubmit(iniciarPesos)} className="">
-          
+
             {
                 perceptronErrors.trainingSet &&
                 <span className="error">{perceptronErrors.trainingSet.message}</span>
