@@ -17,7 +17,7 @@ const PerceptronConfigs = (props) => {
     const [perceptronErrors, setPerceptronErrors] = useState({});
 
     const type = watch("type");
-    const n = 12
+    const n = 22
     const iniciarPesos = async (values) => {
 
         let perceptron;
@@ -42,9 +42,9 @@ const PerceptronConfigs = (props) => {
 
         perceptron = new Adaline(
             n,
-            100,
+            200,
             0.01,
-            0.1,
+            0.01,
             perceptronState.cpDrawer,
         );
 
@@ -90,6 +90,7 @@ const PerceptronConfigs = (props) => {
             return;
         }
         perceptronState.x.forEach((item, index) => {
+            
             perceptronState.perceptron.fit(item, perceptronState.y[index]);
             index < n 
                 ? perceptronState.data[index].corregido = (perceptronState.data[index].ruido)
@@ -135,11 +136,11 @@ const PerceptronConfigs = (props) => {
                 <span className="error">{perceptronErrors.trainedPerceptron.message}</span>
             }
 
-            <Button className="mt-4" type="sumbit" fullWidth color="primary" style={{ color: "#03A9F4" }}>  Inicializar </Button>
+            <Button className="mt-4" type="sumbit" fullWidth color="primary" style={{ color: "#03A9F4" }}>  Señal senoidal </Button>
 
         </Form>
         <Form onSubmit={handleSubmit(entrenar)} className="">
-            <Button className="mt-4" type="sumbit" fullWidth color="primary" style={{ color: "#03A9F4" }}>Entrenar</Button>
+            <Button className="mt-4" type="sumbit" fullWidth color="primary" style={{ color: "#03A9F4" }}>Corregir</Button>
         </Form>
 
         <Form onSubmit={handleSubmit(reiniciar)} className="">
